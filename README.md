@@ -1,5 +1,5 @@
 # 🛒 GroceryPro — Smart Shop Management System
-## SY B.Sc. Computer Science Project — 2025–26
+
 
 
 ---
