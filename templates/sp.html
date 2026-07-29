@@ -1,0 +1,2186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshMart - Grocery Shop Management</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --green: #2D6A4F;
+      --green-light: #40916C;
+      --green-pale: #D8F3DC;
+      --accent: #F4A261;
+      --accent2: #E76F51;
+      --cream: #FEFAE0;
+      --dark: #1B2027;
+      --gray: #6B7280;
+      --border: #E5E7EB;
+      --red: #EF4444;
+      --blue: #3B82F6;
+      --purple: #7C3AED;
+      --teal: #0D9488;
+      --white: #ffffff;
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #F5F7F5;
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    #loginPage {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .login-left {
+      flex: 1;
+      background: linear-gradient(145deg, var(--green) 0%, var(--green-light) 60%, #52B788 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-left::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .login-left::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .login-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .login-logo span {
+      color: var(--accent);
+    }
+
+    .login-tagline {
+      font-size: 18px;
+      opacity: .85;
+      max-width: 280px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .login-icons {
+      display: flex;
+      gap: 24px;
+      margin-top: 48px;
+      font-size: 42px;
+    }
+
+    .login-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--white);
+      padding: 60px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-box h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .login-box p {
+      color: var(--gray);
+      margin-bottom: 36px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      transition: border .2s;
+      background: #FAFAFA;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--green);
+      background: white;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-primary:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(45, 106, 79, .3);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: var(--accent2);
+    }
+
+    .btn-danger {
+      background: var(--red);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      opacity: .85;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--green);
+      color: var(--green);
+    }
+
+    .btn-outline:hover {
+      background: var(--green);
+      color: white;
+    }
+
+    .btn-blue {
+      background: var(--blue);
+      color: white;
+    }
+
+    .btn-purple {
+      background: var(--purple);
+      color: white;
+    }
+
+    .btn-teal {
+      background: var(--teal);
+      color: white;
+    }
+
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: 13px;
+    }
+
+    .login-hint {
+      margin-top: 24px;
+      padding: 14px;
+      background: var(--green-pale);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--green);
+    }
+
+    .login-hint strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    #app {
+      display: none;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .topnav {
+      background: var(--dark);
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .2);
+      overflow-x: auto;
+      gap: 6px;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .nav-tab {
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .65);
+      border: none;
+      background: none;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+
+    .nav-tab:hover {
+      background: rgba(255, 255, 255, .1);
+      color: white;
+    }
+
+    .nav-tab.active {
+      background: var(--green);
+      color: white;
+    }
+
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .nav-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .nav-logout {
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .1);
+      color: white;
+      font-size: 12px;
+      cursor: pointer;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .nav-logout:hover {
+      background: rgba(239, 68, 68, .7);
+    }
+
+    .main {
+      flex: 1;
+      padding: 24px;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+    }
+
+    .section-sub {
+      color: var(--gray);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--green);
+      transition: transform .2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .stat-card.orange {
+      border-color: var(--accent);
+    }
+
+    .stat-card.red {
+      border-color: var(--red);
+    }
+
+    .stat-card.blue {
+      border-color: var(--blue);
+    }
+
+    .stat-card.purple {
+      border-color: var(--purple);
+    }
+
+    .stat-card.teal {
+      border-color: var(--teal);
+    }
+
+    .stat-icon {
+      font-size: 24px;
+      margin-bottom: 7px;
+    }
+
+    .stat-num {
+      font-size: 26px;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .stat-label {
+      color: var(--gray);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .table-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .table-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .table-header h3 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: #F5F5F5;
+      border-radius: 8px;
+      padding: 6px 11px;
+    }
+
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      width: 160px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #F9FAF9;
+      padding: 11px 13px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray);
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 11px 13px;
+      font-size: 13px;
+      border-bottom: 1px solid #F3F4F6;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: #FAFAFA;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .badge-green {
+      background: var(--green-pale);
+      color: var(--green);
+    }
+
+    .badge-red {
+      background: #FEE2E2;
+      color: var(--red);
+    }
+
+    .badge-yellow {
+      background: #FEF9C3;
+      color: #854D0E;
+    }
+
+    .badge-blue {
+      background: #EFF6FF;
+      color: var(--blue);
+    }
+
+    .badge-purple {
+      background: #EDE9FE;
+      color: var(--purple);
+    }
+
+    .badge-teal {
+      background: #CCFBF1;
+      color: var(--teal);
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
+      animation: slideUp .25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal.wide {
+      max-width: 680px;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1
+      }
+    }
+
+    .modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      margin-bottom: 18px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: flex-end;
+    }
+
+    .billing-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .billing-form-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .billing-receipt {
+      background: white;
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 72px;
+    }
+
+    .receipt-header {
+      text-align: center;
+      border-bottom: 2px dashed var(--border);
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+    }
+
+    .receipt-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+    }
+
+    .receipt-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 7px;
+      font-size: 13px;
+    }
+
+    .receipt-item span {
+      color: var(--gray);
+    }
+
+    .receipt-divider {
+      border: none;
+      border-top: 1px dashed var(--border);
+      margin: 10px 0;
+    }
+
+    .receipt-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .bill-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #F3F4F6;
+      font-size: 13px;
+    }
+
+    .bill-item-row:last-child {
+      border-bottom: none;
+    }
+
+    .remove-item {
+      background: none;
+      border: none;
+      color: var(--red);
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .alert {
+      padding: 10px 13px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .alert-success {
+      background: var(--green-pale);
+      color: var(--green);
+    }
+
+    .alert-error {
+      background: #FEE2E2;
+      color: var(--red);
+    }
+
+    .tab-pills {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .tab-pill {
+      padding: 7px 18px;
+      border-radius: 20px;
+      border: 2px solid var(--border);
+      background: white;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all .2s;
+      color: var(--gray);
+    }
+
+    .tab-pill.active {
+      border-color: var(--green);
+      background: var(--green);
+      color: white;
+    }
+
+    .party-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .party-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--purple);
+      transition: transform .2s;
+      position: relative;
+    }
+
+    .party-card.retailer {
+      border-top-color: var(--teal);
+    }
+
+    .party-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .party-card-name {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .party-card-sub {
+      color: var(--gray);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .party-card-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .party-card-stat {
+      background: #F9FAFB;
+      border-radius: 7px;
+      padding: 7px 9px;
+    }
+
+    .party-card-stat .val {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .party-card-stat .lbl {
+      color: var(--gray);
+      font-size: 10px;
+    }
+
+    .party-card-actions {
+      display: flex;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .order-status-pending {
+      background: #FEF9C3;
+      color: #854D0E;
+    }
+
+    .order-status-approved {
+      background: #D8F3DC;
+      color: var(--green);
+    }
+
+    .order-status-delivered {
+      background: #EFF6FF;
+      color: var(--blue);
+    }
+
+    .order-status-cancelled {
+      background: #FEE2E2;
+      color: var(--red);
+    }
+
+    .tier-gold {
+      background: #FEF9C3;
+      color: #92400E;
+    }
+
+    .tier-silver {
+      background: #F1F5F9;
+      color: #475569;
+    }
+
+    .tier-bronze {
+      background: #FEF3C7;
+      color: #B45309;
+    }
+
+    /* ===== SHOP SECTION ===== */
+    .shop-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .shop-catalog {
+      min-height: 400px;
+    }
+
+    .shop-cart {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 72px;
+    }
+
+    .shop-cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .shop-cart-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cart-badge {
+      background: var(--accent2);
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 14px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.12);
+    }
+
+    .product-card-emoji {
+      background: linear-gradient(135deg, var(--green-pale), #b7e4c7);
+      font-size: 40px;
+      text-align: center;
+      padding: 20px 10px 12px;
+      position: relative;
+    }
+
+    .product-card-out {
+      background: linear-gradient(135deg, #fee2e2, #fecaca);
+    }
+
+    .product-card-body {
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card-name {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+
+    .product-card-cat {
+      font-size: 11px;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+
+    .product-card-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 2px;
+    }
+
+    .product-card-stock {
+      font-size: 11px;
+      color: var(--gray);
+      margin-bottom: 10px;
+    }
+
+    .product-card-stock.low {
+      color: var(--accent2);
+    }
+
+    .product-card-footer {
+      padding: 10px 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .qty-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--green);
+      background: white;
+      color: var(--green);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: all .15s;
+    }
+
+    .qty-btn:hover {
+      background: var(--green);
+      color: white;
+    }
+
+    .qty-display {
+      font-weight: 700;
+      font-size: 14px;
+      min-width: 22px;
+      text-align: center;
+    }
+
+    .add-to-cart-btn {
+      flex: 1;
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: none;
+      background: var(--green);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .add-to-cart-btn:hover {
+      background: var(--green-light);
+    }
+
+    .add-to-cart-btn:disabled {
+      background: var(--gray);
+      cursor: not-allowed;
+    }
+
+    .in-cart-indicator {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--accent2);
+      color: white;
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .cart-item-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid #F3F4F6;
+      font-size: 12px;
+    }
+
+    .cart-item-row:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cart-item-name {
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cart-item-price {
+      color: var(--gray);
+      font-size: 11px;
+    }
+
+    .cart-item-subtotal {
+      font-weight: 700;
+      color: var(--green);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0 0;
+      border-top: 2px dashed var(--border);
+      margin-top: 4px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .proceed-btn {
+      width: 100%;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: none;
+      background: linear-gradient(135deg, var(--green), var(--green-light));
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      box-shadow: 0 4px 16px rgba(45,106,79,.3);
+      letter-spacing: .3px;
+    }
+
+    .proceed-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(45,106,79,.4);
+    }
+
+    .proceed-btn:disabled {
+      background: var(--gray);
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .shop-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray);
+    }
+
+    .shop-empty-icon {
+      font-size: 56px;
+      margin-bottom: 14px;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 30px 10px;
+      color: var(--gray);
+    }
+
+    .shop-search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+    }
+
+    .shop-search-bar input {
+      border: none;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      flex: 1;
+      background: transparent;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      .billing-receipt,
+      .billing-receipt * {
+        visibility: visible;
+      }
+
+      .billing-receipt {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+
+      .receipt-print-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGIN -->
+  <div id="loginPage">
+    <div class="login-left">
+      <div class="login-logo">Fresh<span>Mart</span></div>
+      <p class="login-tagline">Complete Grocery Shop Management</p>
+      <div class="login-icons">🥦 🛒 🧾</div>
+    </div>
+    <div class="login-right">
+      <div class="login-box">
+        <h2>Welcome Back</h2>
+        <p>Sign in to manage your grocery store</p>
+        <div id="loginAlert"></div>
+        <div class="form-group"><label>Username</label><input type="text" id="loginUser" value="admin"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="loginPass" value="admin123"></div>
+        <button class="btn btn-primary" onclick="doLogin()">🔐 Sign In</button>
+        <div class="login-hint"><strong>📌 Demo Credentials</strong>Admin: admin / admin123 &nbsp;|&nbsp; Staff: staff /
+          staff123</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app">
+    <nav class="topnav">
+      <div class="nav-logo">Fresh<span>Mart</span></div>
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showSection('dashboard',this)">📊 Dashboard</button>
+        <button class="nav-tab" onclick="showSection('stock',this)">📦 Stock</button>
+        <button class="nav-tab" onclick="showSection('shop',this)">🛍️ Shop</button>
+        <button class="nav-tab" onclick="showSection('billing',this)">🧾 Billing</button>
+        <button class="nav-tab" onclick="showSection('wholesale',this)">🏭 Wholesaler</button>
+        <button class="nav-tab" onclick="showSection('retailer',this)">🏪 Retailers</button>
+        <button class="nav-tab" onclick="showSection('sales',this)">💰 Sales</button>
+        <button class="nav-tab" id="adminTab" onclick="showSection('admin',this)" style="display:none">⚙️ Admin</button>
+      </div>
+      <div class="nav-user">
+        <div class="nav-avatar" id="navAvatar">A</div>
+        <span id="navName" style="color:white;font-size:13px"></span>
+        <button class="nav-logout" onclick="doLogout()">Logout</button>
+      </div>
+    </nav>
+    <div class="main">
+
+      <!-- DASHBOARD -->
+      <div class="section active" id="sec-dashboard">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Dashboard</div>
+            <div class="section-sub" id="dashDate"></div>
+          </div>
+        </div>
+        <div class="cards-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-num" id="totalProducts">0</div>
+            <div class="stat-label">Total Products</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-num" id="lowStockCount">0</div>
+            <div class="stat-label">Low Stock Items</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-icon">🧾</div>
+            <div class="stat-num" id="todaySales">0</div>
+            <div class="stat-label">Today's Bills</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-icon">💰</div>
+            <div class="stat-num" id="todayRevenue">₹0</div>
+            <div class="stat-label">Today's Revenue</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-icon">🏭</div>
+            <div class="stat-num" id="totalWholesalers">0</div>
+            <div class="stat-label">Wholesalers</div>
+          </div>
+          <div class="stat-card teal">
+            <div class="stat-icon">🏪</div>
+            <div class="stat-num" id="totalRetailers">0</div>
+            <div class="stat-label">Retailers</div>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <h3>⚠️ Low Stock Alerts</h3>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Stock</th>
+                <th>Min Stock</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="lowStockTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- STOCK -->
+      <div class="section" id="sec-stock">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Stock Management</div>
+            <div class="section-sub">Manage product inventory</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openAddProduct()">+ Add Product</button>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <h3>All Products</h3>
+            <div class="search-box">🔍 <input type="text" placeholder="Search products..."
+                oninput="searchProducts(this.value)"></div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Retail ₹</th>
+                <th>Wholesale ₹</th>
+                <th>Min WS Qty</th>
+                <th>Stock</th>
+                <th>Min Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SHOP -->
+      <div class="section" id="sec-shop">
+        <div class="section-header">
+          <div>
+            <div class="section-title">🛍️ Shop — Browse & Order</div>
+            <div class="section-sub">Browse available products, add to cart, and proceed to billing</div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="clearShopCart()">🗑️ Clear Cart</button>
+        </div>
+
+        <!-- Search & Category Filter -->
+        <div class="shop-search-bar">
+          <span style="font-size:18px">🔍</span>
+          <input type="text" id="shopSearchInput" placeholder="Search products by name or category…" oninput="renderShop()">
+        </div>
+        <div class="tab-pills" id="shopCategoryPills" style="margin-bottom:16px"></div>
+
+        <div class="shop-layout">
+          <!-- Product Catalog -->
+          <div class="shop-catalog">
+            <div class="product-grid" id="shopProductGrid"></div>
+          </div>
+
+          <!-- Cart Sidebar -->
+          <div class="shop-cart">
+            <div class="shop-cart-header">
+              <div class="shop-cart-title">🛒 Your Cart <span class="cart-badge" id="cartBadge">0</span></div>
+              <button class="btn btn-outline btn-sm" onclick="clearShopCart()" style="padding:4px 10px;font-size:12px">Clear</button>
+            </div>
+            <div id="shopCartItems">
+              <div class="cart-empty">
+                <div style="font-size:36px;margin-bottom:8px">🛒</div>
+                <div style="font-size:13px">Your cart is empty</div>
+                <div style="font-size:11px;margin-top:4px">Add products from the left</div>
+              </div>
+            </div>
+            <div id="shopCartTotal" style="display:none">
+              <div class="cart-total-row">
+                <span>Total</span>
+                <span id="cartTotalAmt">₹0.00</span>
+              </div>
+              <button class="proceed-btn" onclick="proceedToBilling()">
+                ✅ Proceed to Billing
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BILLING -->
+      <div class="section" id="sec-billing">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Billing System</div>
+            <div class="section-sub">Create retail customer bills</div>
+          </div>
+        </div>
+        <div class="billing-grid">
+          <div>
+            <div class="billing-form-card" style="margin-bottom:14px">
+              <h3 style="margin-bottom:14px;font-size:15px;font-weight:600">Customer Details</h3>
+              <div class="input-row">
+                <div class="form-group"><label>Customer Name</label><input type="text" id="custName" placeholder="Name">
+                </div>
+                <div class="form-group"><label>Phone</label><input type="text" id="custPhone" placeholder="Phone"></div>
+              </div>
+              <div class="input-row">
+                <div class="form-group"><label>Select Product</label><select id="billProduct"
+                    onchange="billProductSelected()">
+                    <option value="">-- Choose --</option>
+                  </select></div>
+                <div class="form-group"><label>Available Stock</label><input type="text" id="billAvailStock" readonly
+                    style="background:#f0f0f0"></div>
+              </div>
+              <div class="input-row">
+                <div class="form-group"><label>Price (₹)</label><input type="text" id="billPrice" readonly
+                    style="background:#f0f0f0"></div>
+                <div class="form-group"><label>Quantity</label><input type="number" id="billQty" placeholder="0"
+                    min="1"></div>
+              </div>
+              <button class="btn btn-accent btn-sm" onclick="addBillItem()">+ Add to Bill</button>
+            </div>
+            <div class="billing-form-card">
+              <h3 style="margin-bottom:12px;font-size:15px;font-weight:600">Items in Bill</h3>
+              <div id="billItemsContainer">
+                <p style="color:var(--gray);font-size:13px">No items added.</p>
+              </div>
+            </div>
+          </div>
+          <div class="billing-receipt">
+            <div class="receipt-header">
+              <h2>🛒 FreshMart</h2>
+              <p>Retail Receipt</p>
+              <p id="receiptDate" style="margin-top:4px;font-size:11px"></p>
+            </div>
+            <div id="receiptCustomer" style="margin-bottom:12px;font-size:12px;color:var(--gray)">Customer: —</div>
+            <div id="receiptItemsList"></div>
+            <hr class="receipt-divider">
+            <div class="receipt-item"><span>Subtotal</span><strong id="subTotal">₹0.00</strong></div>
+            <div class="receipt-item"><span>GST (5%)</span><strong id="gstAmt">₹0.00</strong></div>
+            <div class="receipt-item"><span>Discount</span>
+              <span><input type="number" id="discountInput" value="0" min="0" max="100"
+                  style="width:46px;padding:2px 6px;border:1px solid var(--border);border-radius:5px;font-size:12px"
+                  oninput="updateReceipt()"> %</span>
+            </div>
+            <hr class="receipt-divider">
+            <div class="receipt-total"><span>TOTAL</span><span id="grandTotal">₹0.00</span></div>
+            <div class="form-group" style="margin-top:12px;margin-bottom:0">
+              <label style="font-size:12px">Payment Mode</label>
+              <select id="payMode">
+                <option>Cash</option>
+                <option>UPI</option>
+                <option>Card</option>
+              </select>
+            </div>
+            <button class="btn btn-primary receipt-print-btn" style="margin-top:12px" onclick="generateBill()">✅
+              Generate Bill</button>
+            <button class="btn btn-outline receipt-print-btn" style="margin-top:7px" onclick="window.print()">🖨️
+              Print</button>
+            <button class="btn receipt-print-btn"
+              style="margin-top:7px;border:2px solid var(--red);color:var(--red);background:transparent;width:100%;justify-content:center"
+              onclick="clearBill()">🗑️ Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHOLESALER -->
+      <div class="section" id="sec-wholesale">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Wholesaler Management</div>
+            <div class="section-sub">Manage wholesale suppliers & purchase orders</div>
+          </div>
+          <button class="btn btn-purple btn-sm" onclick="openAddParty('wholesaler')">+ Add Wholesaler</button>
+        </div>
+        <div class="tab-pills">
+          <button class="tab-pill active" onclick="wsTab('wsList',this)">🏭 Wholesalers</button>
+          <button class="tab-pill" onclick="wsTab('wsOrders',this)">📋 Purchase Orders</button>
+          <button class="tab-pill" onclick="wsTab('wsNewOrder',this)">➕ New PO</button>
+        </div>
+        <div id="wsList">
+          <div id="wholesalerCards" class="party-cards"></div>
+          <div class="table-card">
+            <div class="table-header">
+              <h3>All Wholesalers</h3>
+              <div class="search-box">🔍 <input type="text" placeholder="Search..."
+                  oninput="searchParty('wholesaler',this.value)"></div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Company</th>
+                  <th>Contact</th>
+                  <th>Phone</th>
+                  <th>GSTIN</th>
+                  <th>Credit Limit</th>
+                  <th>Balance</th>
+                  <th>Tier</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="wholesalerTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="wsOrders" style="display:none">
+          <div class="table-card">
+            <div class="table-header">
+              <h3>Purchase Orders</h3>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>PO#</th>
+                  <th>Wholesaler</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Delivery</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="wsOrdersTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="wsNewOrder" style="display:none">
+          <div class="billing-form-card" style="max-width:780px">
+            <h3 style="margin-bottom:16px;font-size:16px;font-weight:600">Create Purchase Order</h3>
+            <div class="input-row">
+              <div class="form-group"><label>Select Wholesaler *</label><select id="poWholesaler">
+                  <option value="">-- Select --</option>
+                </select></div>
+              <div class="form-group"><label>Expected Delivery Date</label><input type="date" id="poDeliveryDate"></div>
+            </div>
+            <div class="input-row">
+              <div class="form-group"><label>Select Product *</label><select id="poProduct"
+                  onchange="poProductSelected()">
+                  <option value="">-- Select --</option>
+                </select></div>
+              <div class="form-group"><label>Wholesale Price (₹)</label><input type="number" id="poPrice"
+                  placeholder="0.00" min="0"></div>
+            </div>
+            <div class="input-row">
+              <div class="form-group"><label>Quantity *</label><input type="number" id="poQty" placeholder="0" min="1">
+              </div>
+              <div class="form-group"><label>Unit</label><input type="text" id="poUnit" readonly
+                  style="background:#f0f0f0"></div>
+            </div>
+            <button class="btn btn-accent btn-sm" style="margin-bottom:16px" onclick="addPOItem()">+ Add Item</button>
+            <div id="poItemsList"></div>
+            <div class="form-group"><label>Notes</label><textarea id="poNotes" rows="2"
+                placeholder="Any notes..."></textarea></div>
+            <div class="modal-actions" style="margin-top:0">
+              <button class="btn btn-outline btn-sm" onclick="clearPO()">Clear</button>
+              <button class="btn btn-purple btn-sm" onclick="savePO()">📋 Place Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RETAILER -->
+      <div class="section" id="sec-retailer">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Retailer Management</div>
+            <div class="section-sub">Manage retail shop clients & sales orders</div>
+          </div>
+          <button class="btn btn-teal btn-sm" onclick="openAddParty('retailer')">+ Add Retailer</button>
+        </div>
+        <div class="tab-pills">
+          <button class="tab-pill active" onclick="rtTab('rtList',this)">🏪 Retailers</button>
+          <button class="tab-pill" onclick="rtTab('rtOrders',this)">📋 Sales Orders</button>
+          <button class="tab-pill" onclick="rtTab('rtNewOrder',this)">➕ New SO</button>
+        </div>
+        <div id="rtList">
+          <div id="retailerCards" class="party-cards"></div>
+          <div class="table-card">
+            <div class="table-header">
+              <h3>All Retailers</h3>
+              <div class="search-box">🔍 <input type="text" placeholder="Search..."
+                  oninput="searchParty('retailer',this.value)"></div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Shop Name</th>
+                  <th>Owner</th>
+                  <th>Phone</th>
+                  <th>Area</th>
+                  <th>Credit Limit</th>
+                  <th>Balance Due</th>
+                  <th>Discount</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="retailerTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="rtOrders" style="display:none">
+          <div class="table-card">
+            <div class="table-header">
+              <h3>Retailer Sales Orders</h3>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>SO#</th>
+                  <th>Retailer</th>
+                  <th>Items</th>
+                  <th>Subtotal</th>
+                  <th>Disc</th>
+                  <th>GST</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="rtOrdersTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="rtNewOrder" style="display:none">
+          <div class="billing-form-card" style="max-width:780px">
+            <h3 style="margin-bottom:16px;font-size:16px;font-weight:600">Create Retailer Sales Order</h3>
+            <div class="input-row">
+              <div class="form-group"><label>Select Retailer *</label><select id="soRetailer"
+                  onchange="soRetailerSelected()">
+                  <option value="">-- Select --</option>
+                </select></div>
+              <div class="form-group"><label>Retailer Discount (%)</label><input type="number" id="soRetailerDisc"
+                  value="0" readonly style="background:#f0f0f0"></div>
+            </div>
+            <div class="input-row">
+              <div class="form-group"><label>Select Product *</label><select id="soProduct"
+                  onchange="soProductSelected()">
+                  <option value="">-- Select --</option>
+                </select></div>
+              <div class="form-group"><label>Price (₹)</label><input type="text" id="soPrice" readonly
+                  style="background:#f0f0f0"></div>
+            </div>
+            <div class="input-row">
+              <div class="form-group"><label>Quantity *</label><input type="number" id="soQty" placeholder="0" min="1">
+              </div>
+              <div class="form-group"><label>Available Stock</label><input type="text" id="soAvailStock" readonly
+                  style="background:#f0f0f0"></div>
+            </div>
+            <button class="btn btn-accent btn-sm" style="margin-bottom:16px" onclick="addSOItem()">+ Add Item</button>
+            <div id="soItemsList"></div>
+            <div id="soTotals"
+              style="background:#F9FAFB;border-radius:10px;padding:14px;margin-bottom:14px;display:none">
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px">
+                <span>Subtotal</span><strong id="soSubtotal">₹0</strong></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px">
+                <span>Discount</span><strong id="soDiscAmt" style="color:var(--red)">-₹0</strong></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>GST
+                  (5%)</span><strong id="soGst">₹0</strong></div>
+              <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:700;color:var(--teal)">
+                <span>TOTAL</span><span id="soTotal">₹0</span></div>
+            </div>
+            <div class="modal-actions" style="margin-top:0">
+              <button class="btn btn-outline btn-sm" onclick="clearSO()">Clear</button>
+              <button class="btn btn-teal btn-sm" onclick="saveSO()">✅ Place Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SALES HISTORY -->
+      <div class="section" id="sec-sales">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Sales History</div>
+            <div class="section-sub">All transactions</div>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="clearSalesHistory()">🗑️ Clear Bills</button>
+        </div>
+        <div class="tab-pills">
+          <button class="tab-pill active" onclick="salesTab('allSales',this)">🧾 Retail Bills</button>
+          <button class="tab-pill" onclick="salesTab('wsSalesHistory',this)">🏭 Purchase Orders</button>
+          <button class="tab-pill" onclick="salesTab('rtSalesHistory',this)">🏪 Retailer Orders</button>
+        </div>
+        <div id="allSales">
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Bill#</th>
+                  <th>Customer</th>
+                  <th>Items</th>
+                  <th>Subtotal</th>
+                  <th>GST</th>
+                  <th>Disc</th>
+                  <th>Total</th>
+                  <th>Payment</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="salesTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="wsSalesHistory" style="display:none">
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>PO#</th>
+                  <th>Wholesaler</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="wsSalesTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="rtSalesHistory" style="display:none">
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>SO#</th>
+                  <th>Retailer</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="rtSalesTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN -->
+      <div class="section" id="sec-admin">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Admin Panel</div>
+            <div class="section-sub">User & system management</div>
+          </div>
+        </div>
+        <div class="table-card" style="margin-bottom:18px">
+          <div class="table-header">
+            <h3>User Accounts</h3><button class="btn btn-primary btn-sm" onclick="openAddUser()">+ Add User</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTable"></tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <h3>System Controls</h3>
+          </div>
+          <div style="padding:18px;display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-blue btn-sm" onclick="loadSampleData()">📦 Sample Products</button>
+            <button class="btn btn-purple btn-sm" onclick="loadSampleWholesalers()">🏭 Sample Wholesalers</button>
+            <button class="btn btn-teal btn-sm" onclick="loadSampleRetailers()">🏪 Sample Retailers</button>
+            <button class="btn btn-danger btn-sm" onclick="resetAllData()">⚠️ Reset All Data</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal">
+      <h3 id="productModalTitle">Add New Product</h3>
+      <input type="hidden" id="editProductId">
+      <div class="input-row">
+        <div class="form-group"><label>Product Name *</label><input type="text" id="pName" placeholder="e.g. Tomatoes">
+        </div>
+        <div class="form-group"><label>Category *</label>
+          <select id="pCat">
+            <option>Vegetables</option>
+            <option>Fruits</option>
+            <option>Dairy</option>
+            <option>Grains & Pulses</option>
+            <option>Spices</option>
+            <option>Beverages</option>
+            <option>Snacks</option>
+            <option>Cleaning</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="form-group"><label>Retail Price (₹) *</label><input type="number" id="pPrice" placeholder="0.00"
+            min="0"></div>
+        <div class="form-group"><label>Wholesale Price (₹) *</label><input type="number" id="pWholesalePrice"
+            placeholder="0.00" min="0"></div>
+      </div>
+      <div class="input-row">
+        <div class="form-group"><label>Unit</label>
+          <select id="pUnit">
+            <option>kg</option>
+            <option>g</option>
+            <option>litre</option>
+            <option>ml</option>
+            <option>piece</option>
+            <option>dozen</option>
+            <option>packet</option>
+            <option>bottle</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Min Wholesale Qty</label><input type="number" id="pMinWholesaleQty" value="10"
+            min="1"></div>
+      </div>
+      <div class="input-row">
+        <div class="form-group"><label>Stock Qty *</label><input type="number" id="pStock" placeholder="0" min="0">
+        </div>
+        <div class="form-group"><label>Min Stock Level *</label><input type="number" id="pMinStock" placeholder="5"
+            min="0"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline btn-sm" onclick="closeModal('productModal')">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="saveProduct()">Save Product</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="partyModal">
+    <div class="modal wide">
+      <h3 id="partyModalTitle">Add Wholesaler</h3>
+      <input type="hidden" id="partyType">
+      <input type="hidden" id="editPartyId">
+      <div class="input-row">
+        <div class="form-group"><label id="partyNameLabel">Company Name *</label><input type="text" id="partyName">
+        </div>
+        <div class="form-group"><label id="partyContactLabel">Contact Person *</label><input type="text"
+            id="partyContact"></div>
+      </div>
+      <div class="input-row">
+        <div class="form-group"><label>Phone *</label><input type="text" id="partyPhone"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="partyEmail"></div>
+      </div>
+      <div class="input-row">
+        <div class="form-group"><label>GSTIN</label><input type="text" id="partyGSTIN"></div>
+        <div class="form-group"><label id="partyAreaLabel">Area</label><input type="text" id="partyArea"></div>
+      </div>
+      <div class="input-row">
+        <div class="form-group"><label>Credit Limit (₹)</label><input type="number" id="partyCreditLimit" min="0"></div>
+        <div class="form-group" id="partyDiscountGroup"><label>Discount (%)</label><input type="number"
+            id="partyDiscount" min="0" max="100"></div>
+      </div>
+      <div class="form-group" id="partyTierGroup">
+        <label>Wholesaler Tier</label>
+        <select id="partyTier">
+          <option value="Bronze">Bronze</option>
+          <option value="Silver">Silver</option>
+          <option value="Gold">Gold</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Address</label><textarea id="partyAddress" rows="2"></textarea></div>
+      <div class="modal-actions">
+        <button class="btn btn-outline btn-sm" onclick="closeModal('partyModal')">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="saveParty()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="userModal">
+    <div class="modal">
+      <h3>Add New User</h3>
+      <div class="form-group"><label>Username *</label><input type="text" id="uName"></div>
+      <div class="form-group"><label>Password *</label><input type="password" id="uPass"></div>
+      <div class="form-group"><label>Role</label><select id="uRole">
+          <option value="admin">Admin</option>
+          <option value="staff">Staff</option>
+        </select></div>
+      <div class="modal-actions">
+        <button class="btn btn-outline btn-sm" onclick="closeModal('userModal')">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="saveUser()">Add User</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="successModal">
+    <div class="modal" style="text-align:center">
+      <div style="font-size:52px;margin-bottom:8px">✅</div>
+      <h3 style="margin-bottom:7px">Done!</h3>
+      <p id="successMsg" style="color:var(--gray)"></p>
+      <div class="modal-actions" style="justify-content:center;margin-top:16px">
+        <button class="btn btn-primary btn-sm" onclick="closeModal('successModal')">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="viewPartyModal">
+    <div class="modal wide">
+      <h3 id="viewPartyTitle">Party Details</h3>
+      <div id="viewPartyContent"></div>
+      <div class="modal-actions"><button class="btn btn-outline btn-sm"
+          onclick="closeModal('viewPartyModal')">Close</button></div>
+    </div>
+  </div>
+
+  <!-- SHOP CUSTOMER DETAILS MODAL -->
+  <div class="modal-overlay" id="shopCustomerModal">
+    <div class="modal" style="max-width:420px">
+      <div style="text-align:center;font-size:36px;margin-bottom:6px">🛋️</div>
+      <h3 style="text-align:center;margin-bottom:4px">Customer Details</h3>
+      <p style="text-align:center;color:var(--gray);font-size:13px;margin-bottom:20px">These details will appear on the printed bill</p>
+      <div class="form-group">
+        <label>Customer Name <span style="color:var(--red)">*</span></label>
+        <input type="text" id="shopCustName" placeholder="Enter customer name" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" id="shopCustPhone" placeholder="e.g. 9876543210" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Payment Mode</label>
+        <select id="shopPayMode">
+          <option>Cash</option>
+          <option>UPI</option>
+          <option>Card</option>
+        </select>
+      </div>
+      <div id="shopCustModalCart" style="background:#F9FAFB;border-radius:10px;padding:12px;margin-bottom:4px;font-size:12px;max-height:140px;overflow-y:auto"></div>
+      <div style="display:flex;justify-content:space-between;font-weight:700;color:var(--green);font-size:14px;margin-bottom:16px;padding-top:8px;border-top:1px dashed var(--border)">
+        <span>Cart Total</span><span id="shopCustModalTotal">₹0.00</span>
+      </div>
+      <div class="modal-actions" style="margin-top:0">
+        <button class="btn btn-outline btn-sm" onclick="closeModal('shopCustomerModal')">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="confirmShopToBilling()">✅ Confirm &amp; Place Order</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DB = { get(k) { return JSON.parse(localStorage.getItem('gms_' + k) || 'null'); }, set(k, v) { localStorage.setItem('gms_' + k, JSON.stringify(v)); } };
+    function initDB() { if (!DB.get('users')) DB.set('users', [{ id: 1, username: 'admin', password: 'admin123', role: 'admin' }, { id: 2, username: 'staff', password: 'staff123', role: 'staff' }]);['products', 'sales', 'wholesalers', 'retailers', 'purchaseOrders', 'salesOrders'].forEach(k => { if (!DB.get(k)) DB.set(k, []); }); if (!DB.get('billCounter')) DB.set('billCounter', 1000); if (!DB.get('poCounter')) DB.set('poCounter', 2000); if (!DB.get('soCounter')) DB.set('soCounter', 3000); }
+    let currentUser = null;
+    function doLogin() { const u = document.getElementById('loginUser').value.trim(); const p = document.getElementById('loginPass').value.trim(); const user = (DB.get('users') || []).find(x => x.username === u && x.password === p); if (user) { currentUser = user; document.getElementById('loginPage').style.display = 'none'; document.getElementById('app').style.display = 'flex'; document.getElementById('navName').textContent = user.username; document.getElementById('navAvatar').textContent = user.username[0].toUpperCase(); if (user.role === 'admin') document.getElementById('adminTab').style.display = ''; loadDashboard(); renderProducts(); loadBillingDropdown(); loadWholesalerDropdowns(); loadRetailerDropdowns(); renderSales(); renderWholesalers(); renderRetailers(); renderPOs(); renderSOs(); renderShop(); document.getElementById('dashDate').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }); document.getElementById('receiptDate').textContent = new Date().toLocaleString('en-IN'); } else { document.getElementById('loginAlert').innerHTML = '<div class="alert alert-error">❌ Invalid credentials.</div>'; } }
+    function doLogout() { currentUser = null; document.getElementById('loginPage').style.display = 'flex'; document.getElementById('app').style.display = 'none'; document.getElementById('adminTab').style.display = 'none'; }
+    document.addEventListener('keydown', e => { if (e.key === 'Enter' && document.getElementById('loginPage').style.display !== 'none') doLogin(); });
+    function showSection(name, btn) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active')); document.getElementById('sec-' + name).classList.add('active'); if (btn) btn.classList.add('active'); if (name === 'dashboard') loadDashboard(); if (name === 'stock') renderProducts(); if (name === 'shop') renderShop(); if (name === 'billing') loadBillingDropdown(); if (name === 'wholesale') { renderWholesalers(); renderPOs(); loadWholesalerDropdowns(); } if (name === 'retailer') { renderRetailers(); renderSOs(); loadRetailerDropdowns(); } if (name === 'sales') { renderSales(); renderWSSales(); renderRTSales(); } if (name === 'admin') renderUsers(); }
+    function wsTab(id, btn) { ['wsList', 'wsOrders', 'wsNewOrder'].forEach(x => document.getElementById(x).style.display = 'none'); document.getElementById(id).style.display = ''; document.querySelectorAll('#sec-wholesale .tab-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
+    function rtTab(id, btn) { ['rtList', 'rtOrders', 'rtNewOrder'].forEach(x => document.getElementById(x).style.display = 'none'); document.getElementById(id).style.display = ''; document.querySelectorAll('#sec-retailer .tab-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
+    function salesTab(id, btn) { ['allSales', 'wsSalesHistory', 'rtSalesHistory'].forEach(x => document.getElementById(x).style.display = 'none'); document.getElementById(id).style.display = ''; document.querySelectorAll('#sec-sales .tab-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
+    function loadDashboard() { const prods = DB.get('products') || []; const sales = DB.get('sales') || []; const today = new Date().toDateString(); const ts = sales.filter(s => new Date(s.date).toDateString() === today); document.getElementById('totalProducts').textContent = prods.length; document.getElementById('lowStockCount').textContent = prods.filter(p => p.stock <= p.minStock).length; document.getElementById('todaySales').textContent = ts.length; document.getElementById('todayRevenue').textContent = '₹' + (ts.reduce((a, s) => a + s.total, 0)).toFixed(0); document.getElementById('totalWholesalers').textContent = (DB.get('wholesalers') || []).length; document.getElementById('totalRetailers').textContent = (DB.get('retailers') || []).length; const low = prods.filter(p => p.stock <= p.minStock); document.getElementById('lowStockTable').innerHTML = low.length === 0 ? '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:18px">✅ All products well stocked</td></tr>' : low.map(p => `<tr><td><strong>${p.name}</strong></td><td>${p.category}</td><td>${p.stock} ${p.unit}</td><td>${p.minStock} ${p.unit}</td><td>${p.stock === 0 ? '<span class="badge badge-red">Out of Stock</span>' : '<span class="badge badge-yellow">Low Stock</span>'}</td></tr>`).join(''); }
+    let editingProductId = null;
+    function renderProducts(filter = '') { let prods = DB.get('products') || []; if (filter) prods = prods.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()) || p.category.toLowerCase().includes(filter.toLowerCase())); const tbody = document.getElementById('productTable'); const canEdit = currentUser && currentUser.role === 'admin'; if (!prods.length) { tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--gray)">No products. <a href="#" onclick="openAddProduct()" style="color:var(--green)">Add first product</a></td></tr>'; return; } tbody.innerHTML = prods.map(p => { const st = p.stock === 0 ? '<span class="badge badge-red">Out of Stock</span>' : p.stock <= p.minStock ? '<span class="badge badge-yellow">Low Stock</span>' : '<span class="badge badge-green">In Stock</span>'; return `<tr><td>#${p.id}</td><td><strong>${p.name}</strong></td><td>${p.category}</td><td>₹${parseFloat(p.price).toFixed(2)}</td><td>₹${parseFloat(p.wholesalePrice || p.price * .85).toFixed(2)}</td><td>${p.minWholesaleQty || 10} ${p.unit}</td><td>${p.stock} ${p.unit}</td><td>${p.minStock} ${p.unit}</td><td>${st}</td><td style="display:flex;gap:5px">${canEdit ? `<button class="btn btn-outline btn-sm" onclick="openEditProduct(${p.id})">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">🗑️</button>` : '<span style="color:var(--gray);font-size:11px">View</span>'}</td></tr>`; }).join(''); }
+    function searchProducts(v) { renderProducts(v); }
+    function openAddProduct() { editingProductId = null; document.getElementById('productModalTitle').textContent = 'Add New Product';['pName', 'pPrice', 'pWholesalePrice', 'pStock', 'pMinStock'].forEach(id => document.getElementById(id).value = ''); document.getElementById('pMinWholesaleQty').value = 10; openModal('productModal'); }
+    function openEditProduct(id) { const p = (DB.get('products') || []).find(x => x.id === id); if (!p) return; editingProductId = id; document.getElementById('productModalTitle').textContent = 'Edit Product'; document.getElementById('pName').value = p.name; document.getElementById('pCat').value = p.category; document.getElementById('pPrice').value = p.price; document.getElementById('pWholesalePrice').value = p.wholesalePrice || ''; document.getElementById('pUnit').value = p.unit; document.getElementById('pStock').value = p.stock; document.getElementById('pMinStock').value = p.minStock; document.getElementById('pMinWholesaleQty').value = p.minWholesaleQty || 10; openModal('productModal'); }
+    function saveProduct() { const name = document.getElementById('pName').value.trim(); const category = document.getElementById('pCat').value; const price = parseFloat(document.getElementById('pPrice').value); const wholesalePrice = parseFloat(document.getElementById('pWholesalePrice').value); const unit = document.getElementById('pUnit').value; const stock = parseInt(document.getElementById('pStock').value); const minStock = parseInt(document.getElementById('pMinStock').value); const minWholesaleQty = parseInt(document.getElementById('pMinWholesaleQty').value) || 10; if (!name || isNaN(price) || isNaN(stock) || isNaN(minStock)) { alert('Fill all required fields.'); return; } let prods = DB.get('products') || []; if (editingProductId) { prods = prods.map(p => p.id === editingProductId ? { ...p, name, category, price, wholesalePrice: isNaN(wholesalePrice) ? price * .85 : wholesalePrice, unit, stock, minStock, minWholesaleQty } : p); } else { const id = prods.length ? Math.max(...prods.map(p => p.id)) + 1 : 1; prods.push({ id, name, category, price, wholesalePrice: isNaN(wholesalePrice) ? price * .85 : wholesalePrice, unit, stock, minStock, minWholesaleQty }); } DB.set('products', prods); closeModal('productModal'); renderProducts(); loadBillingDropdown(); loadWholesalerDropdowns(); loadRetailerDropdowns(); }
+    function deleteProduct(id) { if (!confirm('Delete product?')) return; DB.set('products', (DB.get('products') || []).filter(p => p.id !== id)); renderProducts(); }
+    let billItems = [];
+    function loadBillingDropdown() { const sel = document.getElementById('billProduct'); sel.innerHTML = '<option value="">-- Choose Product --</option>' + (DB.get('products') || []).filter(p => p.stock > 0).map(p => `<option value="${p.id}">${p.name} (${p.stock} ${p.unit})</option>`).join(''); }
+    function billProductSelected() { const id = parseInt(document.getElementById('billProduct').value); if (!id) { document.getElementById('billPrice').value = ''; document.getElementById('billAvailStock').value = ''; return; } const p = (DB.get('products') || []).find(x => x.id === id); if (p) { document.getElementById('billPrice').value = '₹' + p.price.toFixed(2); document.getElementById('billAvailStock').value = p.stock + ' ' + p.unit; } }
+    function addBillItem() { const id = parseInt(document.getElementById('billProduct').value); const qty = parseInt(document.getElementById('billQty').value); if (!id || !qty || qty < 1) { alert('Select product and enter qty.'); return; } const p = (DB.get('products') || []).find(x => x.id === id); if (!p) return; if (qty > p.stock) { alert('Not enough stock!'); return; } const ex = billItems.find(b => b.productId === id); if (ex) { if (ex.qty + qty > p.stock) { alert('Not enough stock!'); return; } ex.qty += qty; ex.subtotal = ex.qty * ex.price; } else billItems.push({ productId: id, name: p.name, price: p.price, unit: p.unit, qty, subtotal: qty * p.price }); document.getElementById('billQty').value = ''; document.getElementById('billProduct').value = ''; document.getElementById('billPrice').value = ''; document.getElementById('billAvailStock').value = ''; renderBillItems(); updateReceipt(); }
+    function removeBillItem(i) { billItems.splice(i, 1); renderBillItems(); updateReceipt(); }
+    function renderBillItems() { const c = document.getElementById('billItemsContainer'); if (!billItems.length) { c.innerHTML = '<p style="color:var(--gray);font-size:13px">No items added.</p>'; return; } c.innerHTML = billItems.map((it, i) => `<div class="bill-item-row"><div><strong>${it.name}</strong><br><span style="color:var(--gray);font-size:11px">₹${it.price.toFixed(2)} × ${it.qty} ${it.unit}</span></div><div style="display:flex;align-items:center;gap:12px"><strong>₹${it.subtotal.toFixed(2)}</strong><button class="remove-item" onclick="removeBillItem(${i})">×</button></div></div>`).join(''); }
+    function updateReceipt() { document.getElementById('receiptCustomer').textContent = 'Customer: ' + (document.getElementById('custName').value || '—'); const sub = billItems.reduce((a, b) => a + b.subtotal, 0); const gst = sub * .05; const disc = parseFloat(document.getElementById('discountInput').value) || 0; const total = sub + gst - sub * (disc / 100); document.getElementById('subTotal').textContent = '₹' + sub.toFixed(2); document.getElementById('gstAmt').textContent = '₹' + gst.toFixed(2); document.getElementById('grandTotal').textContent = '₹' + total.toFixed(2); document.getElementById('receiptItemsList').innerHTML = billItems.map(it => `<div class="receipt-item"><span>${it.name} ×${it.qty}</span><strong>₹${it.subtotal.toFixed(2)}</strong></div>`).join('') || '<p style="color:var(--gray);font-size:11px;text-align:center">No items</p>'; }
+    function generateBill() { if (!billItems.length) { alert('Add items first.'); return; } const custName = document.getElementById('custName').value.trim() || 'Walk-in'; const custPhone = document.getElementById('custPhone').value.trim(); const payMode = document.getElementById('payMode').value; const sub = billItems.reduce((a, b) => a + b.subtotal, 0); const gst = sub * .05; const disc = parseFloat(document.getElementById('discountInput').value) || 0; const total = sub + gst - sub * (disc / 100); let prods = DB.get('products') || []; billItems.forEach(it => { const p = prods.find(x => x.id === it.productId); if (p) p.stock -= it.qty; }); DB.set('products', prods); let cnt = DB.get('billCounter') || 1000; cnt++; DB.set('billCounter', cnt); const sales = DB.get('sales') || []; sales.unshift({ billNo: cnt, customer: custName, phone: custPhone, items: billItems.map(i => ({ name: i.name, qty: i.qty, price: i.price, unit: i.unit, subtotal: i.subtotal })), subtotal: sub, gst, discount: disc, total, payMode, date: new Date().toISOString(), cashier: currentUser.username }); DB.set('sales', sales); document.getElementById('successMsg').textContent = `Bill #${cnt} — ₹${total.toFixed(2)} (${payMode})`; openModal('successModal'); clearBill(); loadBillingDropdown(); }
+    function clearBill() { billItems = []; document.getElementById('custName').value = ''; document.getElementById('custPhone').value = ''; document.getElementById('discountInput').value = 0; renderBillItems(); updateReceipt(); }
+    let editingPartyId = null, editingPartyType = null;
+    function renderWholesalers(filter = '') { let ws = DB.get('wholesalers') || []; if (filter) ws = ws.filter(w => w.name.toLowerCase().includes(filter.toLowerCase()) || w.contact.toLowerCase().includes(filter.toLowerCase())); document.getElementById('wholesalerCards').innerHTML = ws.slice(0, 4).map(w => `<div class="party-card"><span class="badge badge-purple" style="position:absolute;top:14px;right:14px">${w.tier || 'Bronze'}</span><div class="party-card-name">🏭 ${w.name}</div><div class="party-card-sub">${w.contact} • ${w.phone}</div><div class="party-card-stats"><div class="party-card-stat"><div class="val">₹${(w.creditLimit || 0).toLocaleString()}</div><div class="lbl">Credit Limit</div></div><div class="party-card-stat"><div class="val" style="color:var(--red)">₹${(w.balance || 0).toLocaleString()}</div><div class="lbl">Balance Due</div></div></div><div class="party-card-actions"><button class="btn btn-outline btn-sm" onclick="viewParty(${w.id},'wholesaler')">👁️ View</button><button class="btn btn-purple btn-sm" onclick="openEditParty(${w.id},'wholesaler')">✏️ Edit</button></div></div>`).join(''); const tbody = document.getElementById('wholesalerTable'); if (!ws.length) { tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray)">No wholesalers added.</td></tr>'; return; } tbody.innerHTML = ws.map(w => `<tr><td>#${w.id}</td><td><strong>${w.name}</strong></td><td>${w.contact}</td><td>${w.phone}</td><td>${w.gstin || '—'}</td><td>₹${(w.creditLimit || 0).toLocaleString()}</td><td style="color:var(--red)">₹${(w.balance || 0).toLocaleString()}</td><td><span class="badge ${w.tier === 'Gold' ? 'tier-gold' : w.tier === 'Silver' ? 'tier-silver' : 'tier-bronze'}">${w.tier || 'Bronze'}</span></td><td style="display:flex;gap:5px"><button class="btn btn-outline btn-sm" onclick="viewParty(${w.id},'wholesaler')">👁️</button><button class="btn btn-purple btn-sm" onclick="openEditParty(${w.id},'wholesaler')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteParty(${w.id},'wholesaler')">🗑️</button></td></tr>`).join(''); }
+    function renderRetailers(filter = '') { let rt = DB.get('retailers') || []; if (filter) rt = rt.filter(r => r.name.toLowerCase().includes(filter.toLowerCase()) || r.owner.toLowerCase().includes(filter.toLowerCase())); document.getElementById('retailerCards').innerHTML = rt.slice(0, 4).map(r => `<div class="party-card retailer"><span class="badge badge-teal" style="position:absolute;top:14px;right:14px">${r.discount || 0}% off</span><div class="party-card-name">🏪 ${r.name}</div><div class="party-card-sub">${r.owner} • ${r.phone}</div><div class="party-card-stats"><div class="party-card-stat"><div class="val">₹${(r.creditLimit || 0).toLocaleString()}</div><div class="lbl">Credit Limit</div></div><div class="party-card-stat"><div class="val" style="color:var(--red)">₹${(r.balance || 0).toLocaleString()}</div><div class="lbl">Balance Due</div></div></div><div class="party-card-actions"><button class="btn btn-outline btn-sm" onclick="viewParty(${r.id},'retailer')">👁️ View</button><button class="btn btn-teal btn-sm" onclick="openEditParty(${r.id},'retailer')">✏️ Edit</button></div></div>`).join(''); const tbody = document.getElementById('retailerTable'); if (!rt.length) { tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray)">No retailers added.</td></tr>'; return; } tbody.innerHTML = rt.map(r => `<tr><td>#${r.id}</td><td><strong>${r.name}</strong></td><td>${r.owner}</td><td>${r.phone}</td><td>${r.area || '—'}</td><td>₹${(r.creditLimit || 0).toLocaleString()}</td><td style="color:var(--red)">₹${(r.balance || 0).toLocaleString()}</td><td><span class="badge badge-teal">${r.discount || 0}%</span></td><td style="display:flex;gap:5px"><button class="btn btn-outline btn-sm" onclick="viewParty(${r.id},'retailer')">👁️</button><button class="btn btn-teal btn-sm" onclick="openEditParty(${r.id},'retailer')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteParty(${r.id},'retailer')">🗑️</button></td></tr>`).join(''); }
+    function searchParty(type, v) { type === 'wholesaler' ? renderWholesalers(v) : renderRetailers(v); }
+    function openAddParty(type) { editingPartyId = null; editingPartyType = type; document.getElementById('partyType').value = type; document.getElementById('editPartyId').value = ''; document.getElementById('partyModalTitle').textContent = type === 'wholesaler' ? 'Add Wholesaler' : 'Add Retailer'; document.getElementById('partyNameLabel').textContent = type === 'wholesaler' ? 'Company Name *' : 'Shop Name *'; document.getElementById('partyContactLabel').textContent = type === 'wholesaler' ? 'Contact Person *' : 'Owner Name *'; document.getElementById('partyAreaLabel').textContent = type === 'wholesaler' ? 'Region' : 'Area'; document.getElementById('partyTierGroup').style.display = type === 'wholesaler' ? '' : 'none'; document.getElementById('partyDiscountGroup').style.display = type === 'retailer' ? '' : 'none';['partyName', 'partyContact', 'partyPhone', 'partyEmail', 'partyGSTIN', 'partyArea', 'partyCreditLimit', 'partyDiscount', 'partyAddress'].forEach(id => document.getElementById(id).value = ''); document.getElementById('partyTier').value = 'Bronze'; openModal('partyModal'); }
+    function openEditParty(id, type) { editingPartyId = id; editingPartyType = type; const list = DB.get(type === 'wholesaler' ? 'wholesalers' : 'retailers') || []; const p = list.find(x => x.id === id); if (!p) return; document.getElementById('partyType').value = type; document.getElementById('editPartyId').value = id; document.getElementById('partyModalTitle').textContent = 'Edit ' + (type === 'wholesaler' ? 'Wholesaler' : 'Retailer'); document.getElementById('partyNameLabel').textContent = type === 'wholesaler' ? 'Company Name *' : 'Shop Name *'; document.getElementById('partyContactLabel').textContent = type === 'wholesaler' ? 'Contact Person *' : 'Owner Name *'; document.getElementById('partyAreaLabel').textContent = type === 'wholesaler' ? 'Region' : 'Area'; document.getElementById('partyTierGroup').style.display = type === 'wholesaler' ? '' : 'none'; document.getElementById('partyDiscountGroup').style.display = type === 'retailer' ? '' : 'none'; document.getElementById('partyName').value = p.name; document.getElementById('partyContact').value = type === 'wholesaler' ? p.contact : p.owner; document.getElementById('partyPhone').value = p.phone; document.getElementById('partyEmail').value = p.email || ''; document.getElementById('partyGSTIN').value = p.gstin || ''; document.getElementById('partyArea').value = p.area || ''; document.getElementById('partyCreditLimit').value = p.creditLimit || ''; document.getElementById('partyDiscount').value = p.discount || ''; document.getElementById('partyAddress').value = p.address || ''; if (type === 'wholesaler') document.getElementById('partyTier').value = p.tier || 'Bronze'; openModal('partyModal'); }
+    function saveParty() { const type = document.getElementById('partyType').value; const name = document.getElementById('partyName').value.trim(); const contact = document.getElementById('partyContact').value.trim(); const phone = document.getElementById('partyPhone').value.trim(); if (!name || !contact || !phone) { alert('Fill required fields.'); return; } const data = { name, phone, email: document.getElementById('partyEmail').value.trim(), gstin: document.getElementById('partyGSTIN').value.trim(), area: document.getElementById('partyArea').value.trim(), creditLimit: parseFloat(document.getElementById('partyCreditLimit').value) || 0, address: document.getElementById('partyAddress').value.trim(), balance: 0 }; if (type === 'wholesaler') { data.contact = contact; data.tier = document.getElementById('partyTier').value; } else { data.owner = contact; data.discount = parseFloat(document.getElementById('partyDiscount').value) || 0; } const key = type === 'wholesaler' ? 'wholesalers' : 'retailers'; let list = DB.get(key) || []; if (editingPartyId) { list = list.map(x => x.id === editingPartyId ? { ...x, ...data, balance: x.balance || 0 } : x); } else { data.id = list.length ? Math.max(...list.map(x => x.id)) + 1 : 1; list.push(data); } DB.set(key, list); closeModal('partyModal'); type === 'wholesaler' ? renderWholesalers() : renderRetailers(); loadDashboard(); }
+    function deleteParty(id, type) { if (!confirm('Delete?')) return; const key = type === 'wholesaler' ? 'wholesalers' : 'retailers'; DB.set(key, (DB.get(key) || []).filter(x => x.id !== id)); type === 'wholesaler' ? renderWholesalers() : renderRetailers(); loadDashboard(); }
+    function viewParty(id, type) { const list = DB.get(type === 'wholesaler' ? 'wholesalers' : 'retailers') || []; const p = list.find(x => x.id === id); if (!p) return; document.getElementById('viewPartyTitle').textContent = (type === 'wholesaler' ? '🏭 Wholesaler' : '🏪 Retailer') + ' — ' + p.name; const rows = [['Name', p.name], ['Contact', p.contact || p.owner], ['Phone', p.phone], ['Email', p.email || '—'], ['GSTIN', p.gstin || '—'], ['Area', p.area || '—'], ['Credit Limit', '₹' + (p.creditLimit || 0).toLocaleString()], ['Balance Due', '₹' + (p.balance || 0).toLocaleString()], ['Address', p.address || '—'], ...(type === 'wholesaler' ? [['Tier', p.tier || 'Bronze']] : [['Discount', `${p.discount || 0}%`]])]; document.getElementById('viewPartyContent').innerHTML = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">${rows.map(([l, v]) => `<div style="background:#F9FAFB;border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:3px">${l}</div><div style="font-size:13px;font-weight:600">${v}</div></div>`).join('')}</div>`; openModal('viewPartyModal'); }
+    let poItems = [];
+    function loadWholesalerDropdowns() { const ws = DB.get('wholesalers') || []; document.getElementById('poWholesaler').innerHTML = '<option value="">-- Select Wholesaler --</option>' + ws.map(w => `<option value="${w.id}">${w.name}</option>`).join(''); const prods = DB.get('products') || []; document.getElementById('poProduct').innerHTML = '<option value="">-- Select Product --</option>' + prods.map(p => `<option value="${p.id}">${p.name}</option>`).join(''); }
+    function poProductSelected() { const id = parseInt(document.getElementById('poProduct').value); const p = (DB.get('products') || []).find(x => x.id === id); if (p) { document.getElementById('poPrice').value = (p.wholesalePrice || p.price * .85).toFixed(2); document.getElementById('poUnit').value = p.unit; } }
+    function addPOItem() { const prodId = parseInt(document.getElementById('poProduct').value); const qty = parseInt(document.getElementById('poQty').value); const price = parseFloat(document.getElementById('poPrice').value); if (!prodId || !qty || isNaN(price)) { alert('Select product, qty & price.'); return; } const p = (DB.get('products') || []).find(x => x.id === prodId); if (!p) return; const ex = poItems.find(x => x.productId === prodId); if (ex) { ex.qty += qty; ex.subtotal = ex.qty * ex.price; } else poItems.push({ productId: prodId, name: p.name, unit: p.unit, qty, price, subtotal: qty * price }); renderPOItems(); document.getElementById('poQty').value = ''; }
+    function renderPOItems() { const c = document.getElementById('poItemsList'); if (!poItems.length) { c.innerHTML = ''; return; } const total = poItems.reduce((a, b) => a + b.subtotal, 0); c.innerHTML = `<div style="background:#F9FAFB;border-radius:10px;padding:14px;margin-bottom:14px">${poItems.map((it, i) => `<div class="bill-item-row"><span><strong>${it.name}</strong> ×${it.qty} ${it.unit} @ ₹${it.price}</span><span>₹${it.subtotal.toFixed(2)} <button class="remove-item" onclick="removePOItem(${i})">×</button></span></div>`).join('')}<div style="text-align:right;font-weight:700;font-size:15px;color:var(--purple);margin-top:8px">Total: ₹${total.toFixed(2)}</div></div>`; }
+    function removePOItem(i) { poItems.splice(i, 1); renderPOItems(); }
+    function clearPO() { poItems = []; document.getElementById('poWholesaler').value = ''; document.getElementById('poDeliveryDate').value = ''; document.getElementById('poNotes').value = ''; renderPOItems(); }
+    function savePO() { const wId = parseInt(document.getElementById('poWholesaler').value); if (!wId) { alert('Select a wholesaler.'); return; } if (!poItems.length) { alert('Add items.'); return; } const ws = (DB.get('wholesalers') || []).find(x => x.id === wId); let cnt = DB.get('poCounter') || 2000; cnt++; DB.set('poCounter', cnt); const total = poItems.reduce((a, b) => a + b.subtotal, 0); const pos = DB.get('purchaseOrders') || []; pos.unshift({ id: cnt, wholesalerId: wId, wholesalerName: ws.name, items: [...poItems], total, deliveryDate: document.getElementById('poDeliveryDate').value, notes: document.getElementById('poNotes').value, status: 'Pending', date: new Date().toISOString(), createdBy: currentUser.username }); DB.set('purchaseOrders', pos); let wsList = DB.get('wholesalers') || []; wsList = wsList.map(w => w.id === wId ? { ...w, balance: (w.balance || 0) + total } : w); DB.set('wholesalers', wsList); clearPO(); renderPOs(); document.getElementById('successMsg').textContent = `PO #${cnt} placed with ${ws.name} — ₹${total.toFixed(2)}`; openModal('successModal'); wsTab('wsOrders', document.querySelectorAll('#sec-wholesale .tab-pill')[1]); }
+    function renderPOs() { const pos = DB.get('purchaseOrders') || []; const tbody = document.getElementById('wsOrdersTable'); if (!pos.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--gray)">No purchase orders yet.</td></tr>'; return; } tbody.innerHTML = pos.map(o => `<tr><td><strong>PO#${o.id}</strong></td><td>${o.wholesalerName}</td><td>${o.items.map(i => `${i.name} ×${i.qty}`).join(', ')}</td><td><strong>₹${o.total.toFixed(2)}</strong></td><td><span class="badge order-status-${o.status.toLowerCase()}">${o.status}</span></td><td>${o.deliveryDate || '—'}</td><td style="display:flex;gap:5px">${o.status === 'Pending' ? `<button class="btn btn-blue btn-sm" onclick="updatePOStatus(${o.id},'Approved')">✅ Approve</button>` : ''}${o.status === 'Pending' || o.status === 'Approved' ? `<button class="btn btn-accent btn-sm" onclick="receivePO(${o.id})">📦 Receive</button><button class="btn btn-danger btn-sm" onclick="updatePOStatus(${o.id},'Cancelled')">✕</button>` : ''}${o.status === 'Delivered' ? '<span class="badge badge-blue">Completed</span>' : ''}</td></tr>`).join(''); }
+    function updatePOStatus(id, status) { let pos = DB.get('purchaseOrders') || []; pos = pos.map(o => o.id === id ? { ...o, status } : o); DB.set('purchaseOrders', pos); renderPOs(); }
+    function receivePO(id) { if (!confirm('Mark as Delivered and add to stock?')) return; let pos = DB.get('purchaseOrders') || []; const o = pos.find(x => x.id === id); if (!o) return; let prods = DB.get('products') || []; o.items.forEach(it => { const p = prods.find(x => x.id === it.productId); if (p) p.stock += it.qty; }); DB.set('products', prods); let wsList = DB.get('wholesalers') || []; wsList = wsList.map(w => w.id === o.wholesalerId ? { ...w, balance: Math.max(0, (w.balance || 0) - o.total) } : w); DB.set('wholesalers', wsList); pos = pos.map(x => x.id === id ? { ...x, status: 'Delivered' } : x); DB.set('purchaseOrders', pos); renderPOs(); renderWholesalers(); renderProducts(); alert(`✅ Stock updated. PO #${id} marked Delivered.`); }
+    let soItems = [];
+    function loadRetailerDropdowns() { const rt = DB.get('retailers') || []; document.getElementById('soRetailer').innerHTML = '<option value="">-- Select Retailer --</option>' + rt.map(r => `<option value="${r.id}">${r.name}</option>`).join(''); const prods = (DB.get('products') || []).filter(p => p.stock > 0); document.getElementById('soProduct').innerHTML = '<option value="">-- Select Product --</option>' + prods.map(p => `<option value="${p.id}">${p.name} (${p.stock} ${p.unit})</option>`).join(''); }
+    function soRetailerSelected() { const id = parseInt(document.getElementById('soRetailer').value); const r = (DB.get('retailers') || []).find(x => x.id === id); document.getElementById('soRetailerDisc').value = r ? r.discount || 0 : 0; updateSOTotals(); }
+    function soProductSelected() { const id = parseInt(document.getElementById('soProduct').value); const p = (DB.get('products') || []).find(x => x.id === id); if (p) { document.getElementById('soPrice').value = '₹' + p.price.toFixed(2); document.getElementById('soAvailStock').value = p.stock + ' ' + p.unit; } }
+    function addSOItem() { const prodId = parseInt(document.getElementById('soProduct').value); const qty = parseInt(document.getElementById('soQty').value); if (!prodId || !qty) { alert('Select product and qty.'); return; } const p = (DB.get('products') || []).find(x => x.id === prodId); if (!p) return; if (qty > p.stock) { alert('Not enough stock!'); return; } const ex = soItems.find(x => x.productId === prodId); if (ex) { if (ex.qty + qty > p.stock) { alert('Stock exceeded!'); return; } ex.qty += qty; ex.subtotal = ex.qty * ex.price; } else soItems.push({ productId: prodId, name: p.name, unit: p.unit, qty, price: p.price, subtotal: qty * p.price }); document.getElementById('soQty').value = ''; document.getElementById('soProduct').value = ''; document.getElementById('soPrice').value = ''; document.getElementById('soAvailStock').value = ''; renderSOItems(); updateSOTotals(); }
+    function removeSOItem(i) { soItems.splice(i, 1); renderSOItems(); updateSOTotals(); }
+    function renderSOItems() { const c = document.getElementById('soItemsList'); if (!soItems.length) { c.innerHTML = ''; document.getElementById('soTotals').style.display = 'none'; return; } c.innerHTML = `<div style="background:#F9FAFB;border-radius:10px;padding:14px;margin-bottom:12px">${soItems.map((it, i) => `<div class="bill-item-row"><span><strong>${it.name}</strong> ×${it.qty} ${it.unit} @ ₹${it.price}</span><span>₹${it.subtotal.toFixed(2)} <button class="remove-item" onclick="removeSOItem(${i})">×</button></span></div>`).join('')}</div>`; document.getElementById('soTotals').style.display = ''; }
+    function updateSOTotals() { const sub = soItems.reduce((a, b) => a + b.subtotal, 0); const disc = parseFloat(document.getElementById('soRetailerDisc').value) || 0; const discAmt = sub * (disc / 100); const gst = (sub - discAmt) * .05; const total = sub - discAmt + gst; document.getElementById('soSubtotal').textContent = '₹' + sub.toFixed(2); document.getElementById('soDiscAmt').textContent = '-₹' + discAmt.toFixed(2); document.getElementById('soGst').textContent = '₹' + gst.toFixed(2); document.getElementById('soTotal').textContent = '₹' + total.toFixed(2); }
+    function clearSO() { soItems = []; document.getElementById('soRetailer').value = ''; document.getElementById('soRetailerDisc').value = 0; renderSOItems(); updateSOTotals(); }
+    function saveSO() { const rtId = parseInt(document.getElementById('soRetailer').value); if (!rtId) { alert('Select a retailer.'); return; } if (!soItems.length) { alert('Add items.'); return; } const rt = (DB.get('retailers') || []).find(x => x.id === rtId); const sub = soItems.reduce((a, b) => a + b.subtotal, 0); const disc = parseFloat(document.getElementById('soRetailerDisc').value) || 0; const discAmt = sub * (disc / 100); const gst = (sub - discAmt) * .05; const total = sub - discAmt + gst; let prods = DB.get('products') || []; soItems.forEach(it => { const p = prods.find(x => x.id === it.productId); if (p) p.stock -= it.qty; }); DB.set('products', prods); let cnt = DB.get('soCounter') || 3000; cnt++; DB.set('soCounter', cnt); const sos = DB.get('salesOrders') || []; sos.unshift({ id: cnt, retailerId: rtId, retailerName: rt.name, items: [...soItems], subtotal: sub, discount: disc, discountAmt: discAmt, gst, total, status: 'Pending', date: new Date().toISOString(), createdBy: currentUser.username }); DB.set('salesOrders', sos); let rtList = DB.get('retailers') || []; rtList = rtList.map(r => r.id === rtId ? { ...r, balance: (r.balance || 0) + total } : r); DB.set('retailers', rtList); clearSO(); renderSOs(); loadRetailerDropdowns(); document.getElementById('successMsg').textContent = `SO #${cnt} for ${rt.name} — ₹${total.toFixed(2)}`; openModal('successModal'); rtTab('rtOrders', document.querySelectorAll('#sec-retailer .tab-pill')[1]); }
+    function renderSOs() { const sos = DB.get('salesOrders') || []; const tbody = document.getElementById('rtOrdersTable'); if (!sos.length) { tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:20px;color:var(--gray)">No sales orders yet.</td></tr>'; return; } tbody.innerHTML = sos.map(o => `<tr><td><strong>SO#${o.id}</strong></td><td>${o.retailerName}</td><td>${o.items.map(i => `${i.name} ×${i.qty}`).join(', ')}</td><td>₹${o.subtotal.toFixed(2)}</td><td>${o.discount}%</td><td>₹${o.gst.toFixed(2)}</td><td><strong style="color:var(--teal)">₹${o.total.toFixed(2)}</strong></td><td><span class="badge order-status-${o.status.toLowerCase()}">${o.status}</span></td><td>${new Date(o.date).toLocaleDateString('en-IN')}</td><td style="display:flex;gap:5px">${o.status === 'Pending' ? `<button class="btn btn-blue btn-sm" onclick="updateSOStatus(${o.id},'Approved')">✅</button>` : ''}${o.status === 'Approved' ? `<button class="btn btn-accent btn-sm" onclick="updateSOStatus(${o.id},'Delivered')">📦</button>` : ''}${o.status !== 'Delivered' && o.status !== 'Cancelled' ? `<button class="btn btn-danger btn-sm" onclick="cancelSO(${o.id})">✕</button>` : ''}</td></tr>`).join(''); }
+    function updateSOStatus(id, status) { let sos = DB.get('salesOrders') || []; const o = sos.find(x => x.id === id); if (status === 'Delivered' && o) { let rtList = DB.get('retailers') || []; rtList = rtList.map(r => r.id === o.retailerId ? { ...r, balance: Math.max(0, (r.balance || 0) - o.total) } : r); DB.set('retailers', rtList); renderRetailers(); } sos = sos.map(x => x.id === id ? { ...x, status } : x); DB.set('salesOrders', sos); renderSOs(); }
+    function cancelSO(id) { if (!confirm('Cancel order and restore stock?')) return; let sos = DB.get('salesOrders') || []; const o = sos.find(x => x.id === id); if (!o || o.status === 'Cancelled') return; let prods = DB.get('products') || []; o.items.forEach(it => { const p = prods.find(x => x.id === it.productId); if (p) p.stock += it.qty; }); DB.set('products', prods); let rtList = DB.get('retailers') || []; rtList = rtList.map(r => r.id === o.retailerId ? { ...r, balance: Math.max(0, (r.balance || 0) - o.total) } : r); DB.set('retailers', rtList); sos = sos.map(x => x.id === id ? { ...x, status: 'Cancelled' } : x); DB.set('salesOrders', sos); renderSOs(); renderRetailers(); renderProducts(); }
+    function renderSales() { const sales = DB.get('sales') || []; document.getElementById('salesTable').innerHTML = sales.length ? sales.map(s => `<tr><td><strong>#${s.billNo}</strong></td><td>${s.customer}</td><td>${s.items.map(i => `${i.name} ×${i.qty}`).join(', ')}</td><td>₹${s.subtotal.toFixed(2)}</td><td>₹${s.gst.toFixed(2)}</td><td>${s.discount}%</td><td><strong style="color:var(--green)">₹${s.total.toFixed(2)}</strong></td><td><span class="badge badge-blue">${s.payMode}</span></td><td>${new Date(s.date).toLocaleString('en-IN')}</td></tr>`).join('') : '<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray)">No retail bills yet</td></tr>'; }
+    function renderWSSales() { const pos = DB.get('purchaseOrders') || []; document.getElementById('wsSalesTable').innerHTML = pos.length ? pos.map(o => `<tr><td><strong>PO#${o.id}</strong></td><td>${o.wholesalerName}</td><td>${o.items.map(i => `${i.name} ×${i.qty}`).join(', ')}</td><td><strong>₹${o.total.toFixed(2)}</strong></td><td><span class="badge order-status-${o.status.toLowerCase()}">${o.status}</span></td><td>${new Date(o.date).toLocaleDateString('en-IN')}</td></tr>`).join('') : '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--gray)">No POs yet</td></tr>'; }
+    function renderRTSales() { const sos = DB.get('salesOrders') || []; document.getElementById('rtSalesTable').innerHTML = sos.length ? sos.map(o => `<tr><td><strong>SO#${o.id}</strong></td><td>${o.retailerName}</td><td>${o.items.map(i => `${i.name} ×${i.qty}`).join(', ')}</td><td><strong style="color:var(--teal)">₹${o.total.toFixed(2)}</strong></td><td><span class="badge order-status-${o.status.toLowerCase()}">${o.status}</span></td><td>${new Date(o.date).toLocaleDateString('en-IN')}</td></tr>`).join('') : '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--gray)">No SOs yet</td></tr>'; }
+    function clearSalesHistory() { if (!confirm('Clear all retail bill history?')) return; DB.set('sales', []); renderSales(); loadDashboard(); }
+    function renderUsers() { document.getElementById('usersTable').innerHTML = (DB.get('users') || []).map(u => `<tr><td><strong>${u.username}</strong></td><td><span class="badge ${u.role === 'admin' ? 'badge-red' : 'badge-blue'}">${u.role}</span></td><td>${u.username !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">🗑️ Remove</button>` : '<span style="color:var(--gray);font-size:11px">Protected</span>'}</td></tr>`).join(''); }
+    function openAddUser() { document.getElementById('uName').value = ''; document.getElementById('uPass').value = ''; openModal('userModal'); }
+    function saveUser() { const username = document.getElementById('uName').value.trim(); const password = document.getElementById('uPass').value.trim(); const role = document.getElementById('uRole').value; if (!username || !password) { alert('Fill all fields.'); return; } let users = DB.get('users') || []; if (users.find(u => u.username === username)) { alert('Username exists!'); return; } users.push({ id: users.length ? Math.max(...users.map(u => u.id)) + 1 : 1, username, password, role }); DB.set('users', users); closeModal('userModal'); renderUsers(); }
+    function deleteUser(id) { if (!confirm('Remove user?')) return; DB.set('users', (DB.get('users') || []).filter(u => u.id !== id)); renderUsers(); }
+    function resetAllData() { if (!confirm('Delete ALL data?')) return;['products', 'sales', 'wholesalers', 'retailers', 'purchaseOrders', 'salesOrders'].forEach(k => DB.set(k, [])); DB.set('billCounter', 1000); DB.set('poCounter', 2000); DB.set('soCounter', 3000); renderProducts(); renderSales(); loadDashboard(); loadBillingDropdown(); renderWholesalers(); renderRetailers(); renderPOs(); renderSOs(); alert('Reset complete.'); }
+    function loadSampleData() { DB.set('products', [{ id: 1, name: 'Tomatoes', category: 'Vegetables', price: 30, wholesalePrice: 22, unit: 'kg', stock: 50, minStock: 10, minWholesaleQty: 10 }, { id: 2, name: 'Potatoes', category: 'Vegetables', price: 20, wholesalePrice: 14, unit: 'kg', stock: 80, minStock: 15, minWholesaleQty: 20 }, { id: 3, name: 'Onions', category: 'Vegetables', price: 25, wholesalePrice: 18, unit: 'kg', stock: 60, minStock: 10, minWholesaleQty: 15 }, { id: 4, name: 'Apples', category: 'Fruits', price: 120, wholesalePrice: 90, unit: 'kg', stock: 30, minStock: 8, minWholesaleQty: 5 }, { id: 5, name: 'Bananas', category: 'Fruits', price: 40, wholesalePrice: 30, unit: 'dozen', stock: 20, minStock: 5, minWholesaleQty: 5 }, { id: 6, name: 'Full Cream Milk', category: 'Dairy', price: 55, wholesalePrice: 42, unit: 'litre', stock: 40, minStock: 10, minWholesaleQty: 10 }, { id: 7, name: 'Paneer', category: 'Dairy', price: 90, wholesalePrice: 72, unit: 'packet', stock: 15, minStock: 5, minWholesaleQty: 5 }, { id: 8, name: 'Basmati Rice', category: 'Grains & Pulses', price: 80, wholesalePrice: 62, unit: 'kg', stock: 100, minStock: 20, minWholesaleQty: 25 }, { id: 9, name: 'Toor Dal', category: 'Grains & Pulses', price: 110, wholesalePrice: 88, unit: 'kg', stock: 50, minStock: 10, minWholesaleQty: 10 }, { id: 10, name: 'Turmeric Powder', category: 'Spices', price: 40, wholesalePrice: 30, unit: 'packet', stock: 25, minStock: 5, minWholesaleQty: 10 }, { id: 11, name: 'Amul Butter', category: 'Dairy', price: 52, wholesalePrice: 40, unit: 'piece', stock: 3, minStock: 5, minWholesaleQty: 12 }, { id: 12, name: 'Biscuits', category: 'Snacks', price: 20, wholesalePrice: 14, unit: 'packet', stock: 60, minStock: 10, minWholesaleQty: 24 }]); renderProducts(); loadBillingDropdown(); loadWholesalerDropdowns(); loadRetailerDropdowns(); loadDashboard(); alert('✅ 12 sample products loaded!'); }
+    function loadSampleWholesalers() { DB.set('wholesalers', [{ id: 1, name: 'AgroFresh Distributors', contact: 'Ramesh Sharma', phone: '9876543210', email: 'ramesh@agrofresh.com', gstin: '27AAPFU0939F1ZV', area: 'Mumbai North', creditLimit: 500000, balance: 0, tier: 'Gold', address: 'Andheri East, Mumbai' }, { id: 2, name: 'Royal Grain Suppliers', contact: 'Suresh Patel', phone: '9865432107', email: 'suresh@royalgrain.com', gstin: '24AABCR1234D1ZP', area: 'Ahmedabad', creditLimit: 300000, balance: 0, tier: 'Silver', address: 'APMC Yard, Ahmedabad' }, { id: 3, name: 'Dairy Hub India', contact: 'Priya Nair', phone: '9754321098', email: 'priya@dairyhub.com', gstin: '32AADCD5678E1ZQ', area: 'Pune', creditLimit: 200000, balance: 0, tier: 'Bronze', address: 'Kothrud, Pune' }]); renderWholesalers(); loadWholesalerDropdowns(); loadDashboard(); alert('✅ 3 sample wholesalers loaded!'); }
+    function loadSampleRetailers() { DB.set('retailers', [{ id: 1, name: 'Sharma Kirana Store', owner: 'Mohan Sharma', phone: '9988776655', email: 'mohan@sharma.com', gstin: '', area: 'Dadar, Mumbai', creditLimit: 50000, balance: 0, discount: 8, address: 'Shop 12, Dadar Market' }, { id: 2, name: 'Green Basket Supermart', owner: 'Kavita Joshi', phone: '9977665544', email: 'kavita@greenbasket.com', gstin: '27AABCG9012F1ZR', area: 'Bandra, Mumbai', creditLimit: 100000, balance: 0, discount: 12, address: 'Hill Road, Bandra West' }, { id: 3, name: 'Patel General Stores', owner: 'Dipak Patel', phone: '9966554433', email: '', gstin: '', area: 'Borivali, Mumbai', creditLimit: 30000, balance: 0, discount: 5, address: 'Near Station, Borivali East' }, { id: 4, name: 'Lucky Mini Mart', owner: 'Sunita Verma', phone: '9955443322', email: '', gstin: '', area: 'Thane', creditLimit: 40000, balance: 0, discount: 6, address: 'Hiranandani, Thane' }]); renderRetailers(); loadRetailerDropdowns(); loadDashboard(); alert('✅ 4 sample retailers loaded!'); }
+    function openModal(id) { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+    document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); }); });
+
+    /* ===== SHOP LOGIC ===== */
+    let shopCart = []; // [{productId, name, price, unit, qty, subtotal}]
+    let shopActiveCategory = 'All';
+
+    const CATEGORY_EMOJIS = {
+      'Vegetables': '🥦', 'Fruits': '🍎', 'Dairy': '🥛', 'Grains & Pulses': '🌾',
+      'Spices': '🌶️', 'Beverages': '🧃', 'Snacks': '🍫', 'Cleaning': '🧹', 'Other': '📦'
+    };
+
+    function getCatEmoji(cat) { return CATEGORY_EMOJIS[cat] || '📦'; }
+
+    function renderShop() {
+      const prods = DB.get('products') || [];
+      const searchVal = (document.getElementById('shopSearchInput') ? document.getElementById('shopSearchInput').value : '').toLowerCase().trim();
+      // Build categories
+      const cats = ['All', ...new Set(prods.map(p => p.category).filter(Boolean))];
+      const pillsEl = document.getElementById('shopCategoryPills');
+      if (pillsEl) {
+        pillsEl.innerHTML = cats.map(c => `<button class="tab-pill${c === shopActiveCategory ? ' active' : ''}" onclick="setShopCategory('${c}')">${c === 'All' ? '🛒 All' : getCatEmoji(c) + ' ' + c}</button>`).join('');
+      }
+      // Filter
+      let filtered = prods;
+      if (shopActiveCategory !== 'All') filtered = filtered.filter(p => p.category === shopActiveCategory);
+      if (searchVal) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchVal) || (p.category||'').toLowerCase().includes(searchVal));
+      // Render grid
+      const grid = document.getElementById('shopProductGrid');
+      if (!grid) return;
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="shop-empty"><div class="shop-empty-icon">🔍</div><div style="font-size:16px;font-weight:600;margin-bottom:6px">No products found</div><div style="font-size:13px">Try a different search or category.</div></div>`;
+        return;
+      }
+      grid.innerHTML = filtered.map(p => {
+        const cartItem = shopCart.find(c => c.productId === p.id);
+        const inCart = cartItem ? cartItem.qty : 0;
+        const outOfStock = p.stock <= 0;
+        const isLow = !outOfStock && p.stock <= p.minStock;
+        return `<div class="product-card">
+          <div class="product-card-emoji${outOfStock ? ' product-card-out' : ''}">${getCatEmoji(p.category)}
+            ${inCart > 0 ? `<span class="in-cart-indicator">×${inCart}</span>` : ''}
+          </div>
+          <div class="product-card-body">
+            <div class="product-card-name">${p.name}</div>
+            <div class="product-card-cat">${p.category}</div>
+            <div class="product-card-price">₹${parseFloat(p.price).toFixed(2)} <span style="font-size:11px;font-weight:400;color:var(--gray)">/ ${p.unit}</span></div>
+            <div class="product-card-stock${isLow ? ' low' : ''}">${outOfStock ? '❌ Out of stock' : isLow ? `⚠️ Only ${p.stock} ${p.unit} left` : `✅ ${p.stock} ${p.unit} available`}</div>
+          </div>
+          <div class="product-card-footer">
+            ${!outOfStock ? `
+            <div class="qty-control">
+              <button class="qty-btn" onclick="shopQtyChange(${p.id},-1)">−</button>
+              <span class="qty-display" id="shopQty_${p.id}">${inCart || 1}</span>
+              <button class="qty-btn" onclick="shopQtyChange(${p.id},1)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToShopCart(${p.id})">
+              ${inCart > 0 ? '🔄 Update' : '+ Add'}
+            </button>` : `<span style="color:var(--gray);font-size:12px;width:100%;text-align:center">Unavailable</span>`}
+          </div>
+        </div>`;
+      }).join('');
+      renderShopCart();
+    }
+
+    function setShopCategory(cat) { shopActiveCategory = cat; renderShop(); }
+
+    function shopQtyChange(productId, delta) {
+      const inputEl = document.getElementById('shopQty_' + productId);
+      if (!inputEl) return;
+      const p = (DB.get('products') || []).find(x => x.id === productId);
+      let val = parseInt(inputEl.textContent) + delta;
+      if (val < 1) val = 1;
+      if (p && val > p.stock) val = p.stock;
+      inputEl.textContent = val;
+    }
+
+    function addToShopCart(productId) {
+      const p = (DB.get('products') || []).find(x => x.id === productId);
+      if (!p) return;
+      const inputEl = document.getElementById('shopQty_' + productId);
+      const qty = inputEl ? parseInt(inputEl.textContent) || 1 : 1;
+      if (qty > p.stock) { alert('Not enough stock!'); return; }
+      const ex = shopCart.find(c => c.productId === productId);
+      if (ex) { if (qty > p.stock) { alert('Not enough stock!'); return; } ex.qty = qty; ex.subtotal = qty * ex.price; }
+      else shopCart.push({ productId, name: p.name, price: p.price, unit: p.unit, qty, subtotal: qty * p.price });
+      renderShop();
+    }
+
+    function removeFromShopCart(productId) {
+      shopCart = shopCart.filter(c => c.productId !== productId);
+      renderShop();
+    }
+
+    function clearShopCart() {
+      shopCart = [];
+      renderShop();
+    }
+
+    function renderShopCart() {
+      const badge = document.getElementById('cartBadge');
+      const totalCount = shopCart.reduce((a, c) => a + c.qty, 0);
+      if (badge) badge.textContent = totalCount;
+      const container = document.getElementById('shopCartItems');
+      const totalBlock = document.getElementById('shopCartTotal');
+      if (!container) return;
+      if (!shopCart.length) {
+        container.innerHTML = `<div class="cart-empty"><div style="font-size:36px;margin-bottom:8px">🛒</div><div style="font-size:13px">Your cart is empty</div><div style="font-size:11px;margin-top:4px">Add products from the left</div></div>`;
+        if (totalBlock) totalBlock.style.display = 'none';
+        return;
+      }
+      container.innerHTML = shopCart.map(item => `
+        <div class="cart-item-row">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">₹${item.price.toFixed(2)} × ${item.qty} ${item.unit}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span class="cart-item-subtotal">₹${item.subtotal.toFixed(2)}</span>
+            <button class="remove-item" onclick="removeFromShopCart(${item.productId})" title="Remove">×</button>
+          </div>
+        </div>`)  .join('');
+      const grandTotal = shopCart.reduce((a, c) => a + c.subtotal, 0);
+      if (totalBlock) {
+        totalBlock.style.display = '';
+        document.getElementById('cartTotalAmt').textContent = '₹' + grandTotal.toFixed(2);
+      }
+    }
+
+    function proceedToBilling() {
+      if (!shopCart.length) { alert('Your cart is empty!'); return; }
+      // Show customer details modal before proceeding
+      document.getElementById('shopCustName').value = '';
+      document.getElementById('shopCustPhone').value = '';
+      document.getElementById('shopPayMode').value = 'Cash';
+      // Populate mini cart summary in modal
+      const grandTotal = shopCart.reduce((a, c) => a + c.subtotal, 0);
+      document.getElementById('shopCustModalTotal').textContent = '\u20b9' + grandTotal.toFixed(2);
+      document.getElementById('shopCustModalCart').innerHTML = shopCart.map(c =>
+        `<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #F3F4F6">
+          <span>${c.name} &times;${c.qty} ${c.unit}</span>
+          <strong>\u20b9${c.subtotal.toFixed(2)}</strong>
+        </div>`
+      ).join('');
+      openModal('shopCustomerModal');
+    }
+
+    function confirmShopToBilling() {
+      const name = document.getElementById('shopCustName').value.trim();
+      if (!name) {
+        document.getElementById('shopCustName').style.border = '2px solid var(--red)';
+        document.getElementById('shopCustName').placeholder = 'Name is required!';
+        document.getElementById('shopCustName').focus();
+        return;
+      }
+      document.getElementById('shopCustName').style.border = '';
+      const phone = document.getElementById('shopCustPhone').value.trim();
+      const payMode = document.getElementById('shopPayMode').value;
+      // Transfer cart items to billing
+      billItems = shopCart.map(c => ({ productId: c.productId, name: c.name, price: c.price, unit: c.unit, qty: c.qty, subtotal: c.subtotal }));
+      // Pre-fill billing customer fields
+      document.getElementById('custName').value = name;
+      document.getElementById('custPhone').value = phone;
+      document.getElementById('payMode').value = payMode;
+      closeModal('shopCustomerModal');
+      // Navigate to billing
+      const billingTab = document.querySelector('.nav-tab[onclick*="billing"]');
+      showSection('billing', billingTab);
+      renderBillItems();
+      updateReceipt();
+      // Show confirmation toast
+      const itemCount = shopCart.length;
+      shopCart = [];
+      renderShop();
+      const toast = document.createElement('div');
+      toast.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1B2027;color:white;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 6px 24px rgba(0,0,0,.25);animation:slideUp .3s ease';
+      toast.textContent = `\u2705 ${itemCount} item${itemCount>1?'s':''} ready \u2014 review and click Generate Bill!`;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+
+    initDB();
+  </script>
+</body>
+
+</html>
